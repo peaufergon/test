@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Labirinto Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .fragment {
+        animation: assemble 4s ease-in-out forwards;
+        opacity: 0;
+      }
+      @keyframes assemble {
+        0% {
+          opacity: 0;
+          transform: scale(0.2) rotate(90deg);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+      }
+      .typing {
+        border-right: .1em solid white;
+        white-space: nowrap;
+        overflow: hidden;
+        animation:
+          typing 4s steps(40, end),
+          blink-caret .75s step-end infinite;
+      }
+      @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+      }
+      @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: white; }
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white font-mono h-screen flex items-center justify-center">
+    <div id="page1" class="absolute inset-0 flex items-center justify-center flex-col gap-4">
+      <div class="grid grid-cols-3 gap-1">
+        <img src="https://picsum.photos/seed/1/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/2/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/3/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/4/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/5/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/6/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/7/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/8/100" class="w-24 h-24 object-cover fragment" />
+        <img src="https://picsum.photos/seed/9/100" class="w-24 h-24 object-cover fragment" />
+      </div>
+      <p class="text-xl mt-4">Você está pronto?</p>
+      <button onclick="turnPage()" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-300 transition">Entrar</button>
+    </div><div id="page2" class="absolute inset-0 hidden flex items-center justify-center flex-col px-6 text-lg text-left">
+  <div class="typing w-full max-w-xl">
+    Às vezes, é na ausência que o sentido se revela. No espaço entre as palavras, no silêncio que preenche o labirinto...
+  </div>
+</div>
+
+<script>
+  function turnPage() {
+    document.getElementById('page1').classList.add('hidden');
+    document.getElementById('page2').classList.remove('hidden');
+  }
+</script>
+
+  </body>
+</html>
