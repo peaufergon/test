@@ -1,69 +1,118 @@
-<!DOCTYPE html><html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Labirinto Interativo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      .fragment {
-        animation: assemble 4s ease-in-out forwards;
-        opacity: 0;
-      }
-      @keyframes assemble {
-        0% {
-          opacity: 0;
-          transform: scale(0.2) rotate(90deg);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1) rotate(0deg);
-        }
-      }
-      .typing {
-        border-right: .1em solid white;
-        white-space: nowrap;
-        overflow: hidden;
-        animation:
-          typing 4s steps(40, end),
-          blink-caret .75s step-end infinite;
-      }
-      @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-      }
-      @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: white; }
-      }
-    </style>
-  </head>
-  <body class="bg-black text-white font-mono h-screen flex items-center justify-center">
-    <div id="page1" class="absolute inset-0 flex items-center justify-center flex-col gap-4">
-      <div class="grid grid-cols-3 gap-1">
-        <img src="https://picsum.photos/seed/1/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/2/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/3/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/4/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/5/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/6/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/7/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/8/100" class="w-24 h-24 object-cover fragment" />
-        <img src="https://picsum.photos/seed/9/100" class="w-24 h-24 object-cover fragment" />
-      </div>
-      <p class="text-xl mt-4">Você está pronto?</p>
-      <button onclick="turnPage()" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-300 transition">Entrar</button>
-    </div><div id="page2" class="absolute inset-0 hidden flex items-center justify-center flex-col px-6 text-lg text-left">
-  <div class="typing w-full max-w-xl">
-    Às vezes, é na ausência que o sentido se revela. No espaço entre as palavras, no silêncio que preenche o labirinto...
-  </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Labirinto Teste</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      font-family: 'Courier New', Courier, monospace;
+      color: white;
+      overflow: hidden;
+    }
+
+    #fragmentos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 5px;
+      width: 300px;
+      height: 300px;
+      margin: 50px auto;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 2s ease;
+    }
+
+    #fragmentos img {
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 1.5s ease;
+    }
+
+    #pagina2 {
+      display: none;
+      text-align: center;
+      padding: 50px;
+      animation: fadeIn 2s forwards;
+    }
+
+    .digitando {
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 18px;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink 1s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0 }
+      to { opacity: 1 }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="fragmentos">
+  <img src="https://via.placeholder.com/100x100/111/fff?text=1" />
+  <img src="https://via.placeholder.com/100x100/222/fff?text=2" />
+  <img src="https://via.placeholder.com/100x100/333/fff?text=3" />
+  <img src="https://via.placeholder.com/100x100/444/fff?text=4" />
+  <img src="https://via.placeholder.com/100x100/555/fff?text=5" />
+  <img src="https://via.placeholder.com/100x100/666/fff?text=6" />
+  <img src="https://via.placeholder.com/100x100/777/fff?text=7" />
+  <img src="https://via.placeholder.com/100x100/888/fff?text=8" />
+  <img src="https://via.placeholder.com/100x100/999/fff?text=9" />
+</div>
+
+<div id="pagina2">
+  <p class="digitando">Você entrou no Labirinto. Nada será como antes.</p>
+  <button onclick="alert('Aqui vai para a próxima parte!')">Avançar</button>
 </div>
 
 <script>
-  function turnPage() {
-    document.getElementById('page1').classList.add('hidden');
-    document.getElementById('page2').classList.remove('hidden');
-  }
+  const grid = document.getElementById('fragmentos');
+  const imgs = grid.querySelectorAll('img');
+  const pagina2 = document.getElementById('pagina2');
+
+  window.onload = () => {
+    grid.style.opacity = 1;
+    grid.style.transform = 'scale(1)';
+    imgs.forEach((img, i) => {
+      setTimeout(() => {
+        img.style.opacity = 1;
+        img.style.transform = 'scale(1)';
+      }, i * 150);
+    });
+
+    setTimeout(() => {
+      grid.style.display = 'none';
+      pagina2.style.display = 'block';
+    }, 4000);
+  };
 </script>
 
-  </body>
+</body>
 </html>
